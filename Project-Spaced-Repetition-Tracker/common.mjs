@@ -27,3 +27,21 @@ export function calculateRevisionDate(inputDate) {
     oneYearLater,
   ];
 }
+
+// Step 2:  Agenda filtering function. This will:
+
+// Take all stored agenda items for a user
+// Filter out past dates (only show future dates)
+// Sort them chronologically
+export function getUpcomingAgendaItems(agendaItems, currentDate) {
+  // Filter out past dates
+  const futureItems = agendaItems.filter((item) => {
+    return item.revisionDate > currentDate;
+  });
+  // Sort chronologically
+  const sortedItems = futureItems.sort(
+    (a, b) => a.revisionDate - b.revisionDate,
+  );
+  // Return the result
+  return sortedItems;
+}
