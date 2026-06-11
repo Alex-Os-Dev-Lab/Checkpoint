@@ -59,9 +59,8 @@ function handleUserSelection(event) {
 
   // check if the user has any agenda items
   if (!userAgenda || userAgenda.length === 0) {
-    // If they have no agenda, show the empty message
-    document.getElementById("emptyStateMessage").style.display = "block";
-    document.getElementById("agendaContainer").style.display = "none";
+    // If they have no agenda, display the empty state message
+    displayEmptyState();
   } else {
     // If they have an agenda, filter and sort it using getUpcomingAgendaItems function
     const today = new Date().toISOString().split("T")[0];
@@ -70,9 +69,8 @@ function handleUserSelection(event) {
     // display the agenda
     displayAgenda(upcomingItems);
 
-    // show the agenda container and hide the empty message
-    document.getElementById("agendaContainer").style.display = "block";
-    document.getElementById("emptyStateMessage").style.display = "none";
+    // hide the empty message and show the agenda
+    displayAgendaView();
   }
 }
 
@@ -111,4 +109,22 @@ function formatDate(dateString) {
     month: "long",
     year: "numeric",
   });
+}
+
+// create function to handle displaying the empty state message
+function displayEmptyState() {
+  // hide the agenda container since there's no agenda to show
+  document.getElementById("agendaContainer").style.display = "none";
+
+  // show the empty state message to let the user know they need to add topics
+  document.getElementById("emptyStateMessage").style.display = "block";
+}
+
+// create a function to display the agenda view
+function displayAgendaView() {
+  // hide the empty state message
+  document.getElementById("emptyStateMessage").style.display = "none";
+
+  // show the agenda container so users can see their revision schedule
+  document.getElementById("agendaContainer").style.display = "block";
 }
