@@ -1,8 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <script type="module" src="script.mjs"></script>
   </head>
   <body>
+    <!--create a main container to organize page content -->
+    <main>
+      <!-- section to group the user selection functionality -->
+      <section>
+        <!-- label so users know what the dropdown is for -->
+        <!-- create a dropdown using the select element with id "userSelect" so JavaScript can find it -->
+        <!-- connect id to the label's "for" attribute for accessibility -->
+        <label for="userSelect">Select a user:</label>
+        <select id="userSelect">
+          <!-- add a disabled placeholder option that shows when no user is selected -->
+          <option value="" disabled selected>Choose a user</option>
+        </select>
+      </section>
+
+      <!-- section to display messages when a user has no agenda -->
+      <!-- JavaScript will show/hide this container based on whether there's data -->
+      <section id="emptyStateMessage" style="display: none">
+        <p>No topics to revise yet. Add one using the form below!</p>
+      </section>
+
+      <!-- section to display the user's agenda (list of topics to revise) -->
+      <!-- JavaScript will fill this with topics and dates -->
+      <section id="agendaContainer" style="display: none">
+        <h2>Your Revision Schedule</h2>
+        <!-- Unordered list to display each revision item -->
+        <!-- Each topic with its revision date will become a list item -->
+        <ul id="agendaList">
+          <!-- JavaScript will add <li> items here -->
+        </ul>
+      </section>
+
+      <!-- section to create a form so users can add new topics to revise -->
+      <section>
+        <!-- Fieldset to group related form inputs -->
+        <!-- Legend to describe what this form does -->
+        <fieldset>
+          <legend>Add a New Topic to Revise</legend>
+
+          <!-- Create form with "addTopicForm" id so JavaScript can access it -->
+          <form id="addTopicForm">
+            <!-- Create label connected to the topic input for accessibility/screen readers -->
+            <label for="topicInput">Topic Name:</label>
+            <!-- user text input for topic name -->
+            <input
+              type="text"
+              id="topicInput"
+              placeholder="e.g., Functions in JS"
+              required
+            />
+
+            <!-- Create label connected to the date picker -->
+            <label for="dateInput">Revision Start Date:</label>
+            <!-- Create date input that gives users a date picker -->
+            <!-- Required attribute to ensure users must pick a date -->
+            <input type="date" id="dateInput" required />
+
+            <!-- Create a submit button so users can add their topic -->
+            <button type="submit">Add Topic</button>
+          </form>
+        </fieldset>
+      </section>
+    </main>
   </body>
 </html>
