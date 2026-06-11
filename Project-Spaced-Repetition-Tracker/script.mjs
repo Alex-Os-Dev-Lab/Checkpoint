@@ -89,19 +89,26 @@ function displayAgenda(agendaItems) {
     // create a new list item element
     const listItem = document.createElement("li");
 
+    // format the date to be more readable (e.g., "26th July 2026")
+    const formattedDate = formatDate(item.revisionDate);
+
     // set the text to show the topic name and revision date
-    listItem.textContent = `${item.topic} - ${item.revisionDate}`;
+    listItem.textContent = `${item.topic} - ${formattedDate}`;
 
     // add the item to the list
     agendaList.appendChild(listItem);
   });
 }
 
-// create a function to set the date input to today's date
-function setDefaultDate() {
-  // get today's date in the format YYYY-MM-DD
-  const today = new Date().toISOString().split("T")[0];
+// create a helper function to format dates into a readable format
+function formatDate(dateString) {
+  // create a new Date object from the string
+  const date = new Date(dateString);
 
-  // set the date input value to today
-  document.getElementById("dateInput").value = today;
+  // use the browser's built-in date formatter to create a readable date
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 }
