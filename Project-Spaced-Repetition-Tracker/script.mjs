@@ -187,6 +187,41 @@ function handleFormSubmission(event) {
   resetForm();
 }
 
+// create a function to refresh the agenda display after adding a new topic
+function refreshUserAgenda(userId) {
+  // get all the stored data for this user
+  const userAgenda = getData(userId);
+
+  // get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
+
+  // check if the user has any agenda items
+  if (!userAgenda || userAgenda.length === 0) {
+    // If they have no agenda, display the empty state
+    displayEmptyState();
+  } else {
+    // If they have agenda items, filter and sort them
+    const upcomingItems = getUpcomingAgendaItems(userAgenda, today);
+
+    // display the filtered and sorted agenda
+    displayAgenda(upcomingItems);
+
+    // show the agenda view (hide the empty message)
+    displayAgendaView();
+  }
+}
+
+// create a function to reset the form after the user submits it
+// form stays visible on the page so users can add more topics
+function resetForm() {
+  // clear the topic name input field
+  document.getElementById("topicInput").value = "";
+
+  // set the date input back to today's date
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("dateInput").value = today;
+}
+
 // add an event listener to the form so it calls my function when submitted
 window.addEventListener("DOMContentLoaded", function () {
   document
