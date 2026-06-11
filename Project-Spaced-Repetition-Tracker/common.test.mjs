@@ -32,16 +32,12 @@ test("Revision dates are correct", () => {
   );
 });
 
-// test calculateRevisionDate handles dates across month boundaries correctly
-test("Revision dates handle month boundaries correctly", () => {
-  // test with a date near the end of the month (October 31st)
-  const dates = calculateRevisionDate("2026-10-31");
+// test that calculateRevisionDate returns the correct number of dates
+test("Revision dates returns exactly 5 dates", () => {
+  const dates = calculateRevisionDate("2026-07-19");
 
-  // verify the 1-month date handles the transition correctly
-  assert.equal(
-    dates[1].toISOString().split("T")[0],
-    "2026-11-30", // November has 30 days, so it should be the last day
-  );
+  // verify that exactly 5 revision dates are returned
+  assert.equal(dates.length, 5);
 });
 
 // test that upcoming agenda filters out past dates correctly

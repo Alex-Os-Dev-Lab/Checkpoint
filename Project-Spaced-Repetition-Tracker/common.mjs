@@ -34,14 +34,27 @@ export function calculateRevisionDate(inputDate) {
 // Filter out past dates (only show future dates)
 // Sort them chronologically
 export function getUpcomingAgendaItems(agendaItems, currentDate) {
-  // Filter out past dates
+  // convert the current date string to a Date object for proper comparison
+  const today = new Date(currentDate);
+
+  // Filter out past dates by comparing Date objects
   const futureItems = agendaItems.filter((item) => {
-    return item.revisionDate > currentDate;
+    // convert the revision date string to a Date object
+    const itemDate = new Date(item.revisionDate);
+
+    // keep the item only if it's on or after today
+    return itemDate >= today;
   });
-  // Sort chronologically
-  const sortedItems = futureItems.sort(
-    (a, b) => a.revisionDate - b.revisionDate,
-  );
-  // Return the result
+
+  // Sort chronologically by converting to Date objects for proper comparison
+  const sortedItems = futureItems.sort((a, b) => {
+    const dateA = new Date(a.revisionDate);
+    const dateB = new Date(b.revisionDate);
+
+    // subtract the dates to get the correct sort order (earliest first)
+    return dateA - dateB;
+  });
+
+  // Return the filtered and sorted items
   return sortedItems;
 }
