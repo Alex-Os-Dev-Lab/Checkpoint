@@ -128,3 +128,68 @@ function displayAgendaView() {
   // show the agenda container so users can see their revision schedule
   document.getElementById("agendaContainer").style.display = "block";
 }
+
+// create a function to handle when the user submits the form to add a new topic
+function handleFormSubmission(event) {
+  // prevent the form from refreshing the page
+  event.preventDefault();
+
+  // get the topic name the user typed in
+  const topicName = document.getElementById("topicInput").value;
+
+  // get the date the user selected
+  const selectedDate = document.getElementById("dateInput").value;
+
+  // validate that both fields have been filled in
+  if (!topicName || !selectedDate) {
+    // If either field is empty, show an alert and stop
+    alert("Please fill in both the topic name and date");
+    return;
+  }
+
+  // get the currently selected user ID from the dropdown
+  const selectedUserId = document.getElementById("userSelect").value;
+
+  // check that a user is selected
+  if (!selectedUserId) {
+    alert("Please select a user first");
+    return;
+  }
+
+  // call calculateRevisionDate function to get all 5 revision dates
+  const revisionDates = calculateRevisionDate(selectedDate);
+
+  // create an array to store all the agenda items
+  const agendaItemsToAdd = [];
+
+  // loop through each revision date
+  revisionDates.forEach((revisionDate) => {
+    // convert the date to a string format YYYY-MM-DD
+    const dateString = revisionDate.toISOString().split("T")[0];
+
+    // create an agenda item with the topic name and this revision date
+    const agendaItem = {
+      topic: topicName,
+      revisionDate: dateString,
+    };
+
+    // add the item to the array
+    agendaItemsToAdd.push(agendaItem);
+  });
+
+  // store all the new agenda items for this user using the storage function
+  addData(selectedUserId, agendaItemsToAdd);
+
+  // call the function to refresh the display with the new data
+  refreshUserAgenda(selectedUserId);
+
+  // call the function to reset the form for adding more topics
+  resetForm();
+}
+
+// add an event listener to the form so it calls my function when submitted
+window.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("addTopicForm")
+    .addEventListener("submit", handleFormSubmission);
+});
